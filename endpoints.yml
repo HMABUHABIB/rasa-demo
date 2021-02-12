@@ -1,2 +1,18 @@
 action_endpoint:
   url: http://localhost:5055/webhook
+
+
+# tracker_store:
+#     type: SQL
+#     dialect: "sqlite"  # the dialect used to interact with the db
+#     url: ""  # (optional) host of the sql db, e.g. "localhost"
+#     db: "tracker_store.db"  # path to your db
+
+tracker_store:
+    type: SQL
+    dialect: postgresql  # the dialect used to interact with the db
+    url: localhost  # (optional) host of the sql db, e.g. "localhost"
+    port: 5432
+    db: tracker_store  # path to your db
+    username: postgres # username used for authentication
+    password: rasa # passwo

@@ -14,8 +14,33 @@ repositories:
 - name: rasa-x
   url: https://rasahq.github.io/rasa-x-helm
 
+- name: ingress-nginx
+  url: https://kubernetes.github.io/ingress-nginx
 
 releases:
+  - name: ingress-nginx
+    namespace: ingress-nginx
+    chart: ingress-nginx/ingress-nginx
+    version: 3.3.0
+    values:
+    - rbac:
+        create: true
+    - controller:
+        kind: Deployment
+        replicaCount: 3
+        publishService:
+          enabled: true
+        metrics:
+          enabled: true
+        config:
+          server-tokens: "false"
+          proxy-read-timeout: "720"
+          proxy-send-timeout: "720"
+          client-body-timeout: "720"
+        extraArgs:
+          enable-ssl-chain-completion: "true"
+
+
   - name: {{ requiredEnv "RELEASE_NAME" }}
     namespace: {{ requiredEnv "NAMESPACE" }}
     labels:
