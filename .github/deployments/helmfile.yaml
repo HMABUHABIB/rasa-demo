@@ -109,7 +109,7 @@ releases:
             cert-manager.io/issue-temporary-certificate: "true"
             cert-manager.io/cluster-issuer: "letsencrypt"
           hosts:
-            - host: {{ requiredEnv "RASA_X_DOMAIN" }}
+            - host: "" #{{ requiredEnv "RASA_X_DOMAIN" }}
               paths:
                 - /*
       - debugMode: .Values.debugMode
