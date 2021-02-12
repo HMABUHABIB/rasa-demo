@@ -4,7 +4,7 @@ on:
   push:
     branches:
     - 'master'
-    - 'k8s' # for testing only
+    - 'k8s' # for testing only 
     # TODO: other conditions for deployment
 
 # on:
