@@ -11,11 +11,11 @@ environments:
     - values/development.yaml
 
 repositories:
-- name: rasa-x
-  url: https://rasahq.github.io/rasa-x-helm
+  - name: rasa-x
+    url: https://rasahq.github.io/rasa-x-helm
 
-- name: ingress-nginx
-  url: https://kubernetes.github.io/ingress-nginx
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
 
 releases:
   - name: ingress-nginx
