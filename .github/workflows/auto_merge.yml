@@ -1,24 +1,19 @@
 name: Automatic PR Merger
 # name: Deploy Rasa X
 on:
-  push:
+  push: 
     branches:
-    - 'master'
-    - 'k8s' # for testing only
-    # TODO: other conditions for deployment
-
-# on:
-  # push: {} # update PR when base branch is updated
-  # status: {} # try to merge when other checks are completed
-  # pull_request_review: # try to merge after review
-  #   types:
-  #     - submitted
-  #     - edited
-  #     - dismissed
-  # pull_request: # try to merge if labels have changed (white/black list)
-  #   types:
-  #     - labeled
-  #     - unlabeled
+    - 'k8s' #for testing
+  status: {} # try to merge when other checks are completed
+  pull_request_review: # try to merge after review
+    types:
+      - submitted
+      - edited
+      - dismissed
+  pull_request: # try to merge if labels have changed (white/black list)
+    types:
+      - labeled
+      - unlabeled
 
 env:
   # These values are viewable in the Sara K8s CI entry of 1password
@@ -56,18 +51,17 @@ env:
   GCLOUD_VERSION: "297.0.1"
 
 
-# jobs:
+jobs:
   # that's all. two steps are needed - if PR is mergeable according to
   # branch protection rules it will be merged automatically
   # and latest model file is trained & uploaded to Rasa X
-  # mergepal:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: rasahq/merge-pal-action@v0.5.1
-  #       with:
-  #         token: ${{ secrets.GITHUB_TOKEN }}
-jobs:
+  mergepal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: rasahq/merge-pal-action@v0.5.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
   deploy_to_k8s_cluster:
     name: Rasa Enterprise K8s deployment
     runs-on: ubuntu-20.04
@@ -152,10 +146,11 @@ jobs:
     - id: files
       uses: jitterbit/get-changed-files@v1
     - name: set_training
-      # if: |
-      #     contains(  steps.files.outputs.all, 'data/' )
-      #     || contains(  steps.files.outputs.all, 'config.yml' )
-      #     || contains(  steps.files.outputs.all, 'domain.yml' )
+      if: |
+          contains(  steps.files.outputs.all, 'data/' )
+          || contains(  steps.files.outputs.all, 'config.yml' )
+          || contains(  steps.files.outputs.all, 'domain.yml' )
+          || contains(  steps.files.outputs.all, 'requirements.txt' )
       run: echo "RUN_TRAINING=true" >> $GITHUB_ENV
     - name: Set up Python 3.7
       if: env.RUN_TRAINING == 'true'
