@@ -25,6 +25,39 @@ releases:
           imagePullPolicy: Always
           name: {{ requiredEnv "ACTION_SERVER_IMAGE_NAME" }}
           tag: {{ requiredEnv "ACTION_SERVER_TAG" }}
+          extraEnvs:
+          - name: RASA_X_HOST
+            value: {{ requiredEnv "RASA_X_DOMAIN" }}
+          - name: GDRIVE_CREDENTIALS
+            valueFrom:
+              secretKeyRef:
+                name: {{ requiredEnv "ACTION_SERVER_SECRET_NAME" }}
+                key: "GDRIVE_CREDENTIALS"
+          - name: MAILCHIMP_LIST
+            valueFrom:
+              secretKeyRef:
+                name: {{ requiredEnv "ACTION_SERVER_SECRET_NAME" }}
+                key: "MAILCHIMP_LIST"
+          - name: MAILCHIMP_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ requiredEnv "ACTION_SERVER_SECRET_NAME" }}
+                key: "MAILCHIMP_API_KEY"
+          - name: ALGOLIA_APP_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ requiredEnv "ACTION_SERVER_SECRET_NAME" }}
+                key: "ALGOLIA_APP_ID"
+          - name: ALGOLIA_SEARCH_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ requiredEnv "ACTION_SERVER_SECRET_NAME" }}
+                key: "ALGOLIA_SEARCH_KEY"
+          - name: ALGOLIA_DOCS_INDEX
+            valueFrom:
+              secretKeyRef:
+                name: {{ requiredEnv "ACTION_SERVER_SECRET_NAME" }}
+                key: "ALGOLIA_DOCS_INDEX"
       - global:
           postgresql:
             postgresqlPassword: {{ requiredEnv "RASA_X_DATABASE_PASSWORD" }}
