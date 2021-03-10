@@ -2,17 +2,7 @@ name: Merge & Deploy
 on:
   push: 
     branches:
-    - 'k8s' #for testing
-  # status: {} # try to merge when other checks are completed
-  # pull_request_review: # try to merge after review
-  #   types:
-  #     - submitted
-  #     - edited
-  #     - dismissed
-  # pull_request: # try to merge if labels have changed (white/black list)
-  #   types:
-  #     - labeled
-  #     - unlabeled
+    - 'main'
 
 env:
   # These values are viewable in the Sara K8s CI entry of 1password
@@ -49,16 +39,7 @@ env:
   # we use 297.0.01 version
   GCLOUD_VERSION: "297.0.1"
 
-
 jobs:
-  # mergepal:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: rasahq/merge-pal-action@v0.5.1
-  #       with:
-  #         token: ${{ secrets.GITHUB_TOKEN }}
-
   deploy_to_k8s_cluster:
     name: Rasa Enterprise K8s deployment
     runs-on: ubuntu-20.04
